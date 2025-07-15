@@ -78,8 +78,7 @@ class chess:
         print(ret)
         return ret
 
-    #i j conditon yet
-    def wrook(self,i,j):
+    def wrook(self,i,j):                                
         ret=[]
         x=i
         y=j
@@ -166,6 +165,7 @@ class chess:
         [x,y]=self.cal(to)
 
         pmoves=self.possiblemoves(i,j,turn)
+        print(pmoves)
 
         if(to not in pmoves):
             print("Not a valid move , try again")
