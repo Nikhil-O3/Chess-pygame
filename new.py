@@ -78,6 +78,52 @@ class chess:
         print(ret)
         return ret
 
+    #i j conditon yet
+    def wrook(self,i,j):
+        ret=[]
+        x=i
+        y=j
+        while( self.v(x+1,y) and self.board[x+1][y] not in self.wpieces):
+            if(self.board[x+1][y]!='_'):
+                ret.append(self.tonum(x+1,y))
+                break
+            ret.append(self.tonum(x+1,y))
+            x=x+1
+        
+        x=i
+        y=j
+
+        while( self.v(x-1,y) and self.board[x-1][y] not in self.wpieces):
+            if(self.board[x-1][y]!='_'):
+                ret.append(self.tonum(x-1,y))
+                break
+            ret.append(self.tonum(x-1,y))
+            x=x-1
+        
+        x=i
+        y=j
+
+        while( self.v(x,y-1) and self.board[x][y-1] not in self.wpieces):
+            if(self.board[x][y-1]!='_'):
+                ret.append(self.tonum(x,y-1))
+                break
+            ret.append(self.tonum(x,y-1))
+            y=y-1
+
+
+        x=i
+        y=j
+
+        while( self.v(x,y+1) and self.board[x][y+1] not in self.wpieces):
+            if(self.board[x][y+1]!='_'):
+                ret.append(self.tonum(x,y+1))
+                break
+            ret.append(self.tonum(x,y+1))
+            y=y+1
+
+
+        return ret
+
 
     def possiblemoves(self,i,j,turn):
         if(turn=='w'):
