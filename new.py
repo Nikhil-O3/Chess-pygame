@@ -1,0 +1,198 @@
+
+class chess:
+
+    def __init__(self):
+        self.turn='w'
+        self.running=True
+        self.board=[
+        ['R','N','B','Q','K','B','N','R'],
+        ['P','P','P','P','P','P','P','P'],
+        ['_','_','_','_','_','_','_','_'],
+        ['_','_','_','_','_','_','_','_'],
+        ['_','_','_','_','_','_','_','_'],
+        ['_','_','_','_','_','_','_','_'],
+        ['p','p','p','p','p','p','p','p'],
+        ['r','n','b','q','k','b','n','r']
+                    ]
+        
+        self.wpieces=['q','k','b','n','r','p']
+        self.bpieces=['R','N','B','Q','K','P']
+        
+
+
+    def isblack(self,i,j):
+        return(self.board[i][j] in self.bpieces) 
+    
+    def iswhite(self,i,j):
+        return(self.board[i][j] in self.wpieces) 
+
+    def tonum(self,i,j):
+        return (i*10)+j
+    
+    def v(self,i,j):
+        return i<8 and i>-1 and j<8 and j>-1
+
+    #promotion not defined
+    def wpawn(self,i,j):
+        ret=[]
+
+        if(self.v(i-1,j) and self.board[i-1][j]=='_'):
+            ret.append(self.tonum(i-1,j))
+        if(self.v(i-1,j-1) and self.isblack(i-1,j-1)):
+            ret.append(self.tonum(i-1,j-1))
+        if(self.v(i-1,j+1) and self.isblack(i-1,j+1)):
+            ret.append(self.tonum(i-1,j+1))
+        if(i==6):
+            ret.append(self.tonum(i-2,j))
+        print(ret)
+        return ret
+        
+    def wknight(self,i,j):
+        ret=[]
+        if(self.v(i-1,j-2) and self.board[i-1][j-2] not in self.wpieces):
+            ret.append(self.tonum(i-1,j-2))
+
+        if(self.v(i-1,j+2) and self.board[i-1][j+2] not in self.wpieces):
+            ret.append(self.tonum(i-1,j+2))
+
+        if(self.v(i-2,j-1) and self.board[i-2][j-1] not in self.wpieces):
+            ret.append(self.tonum(i-2,j-1))
+
+        if(self.v(i-2,j+1) and self.board[i-2][j+1] not in self.wpieces):
+            ret.append(self.tonum(i-2,j+1))
+
+        #
+
+        if(self.v(i+1,j-2) and self.board[i+1][j-2] not in self.wpieces):
+            ret.append(self.tonum(i+1,j-2))
+
+        if(self.v(i+1,j+2) and self.board[i+1][j+2] not in self.wpieces):
+            ret.append(self.tonum(i+1,j+2))
+
+        if(self.v(i+2,j-1) and self.board[i+2][j-1] not in self.wpieces):
+            ret.append(self.tonum(i+2,j-1))
+
+        if(self.v(i+2,j+1) and self.board[i+2][j+1] not in self.wpieces):
+            ret.append(self.tonum(i+2,j+1))
+
+        print(ret)
+        return ret
+
+
+    def possiblemoves(self,i,j,turn):
+        if(turn=='w'):
+            if(self.board[i][j]=='p'):
+                return self.wpawn(i,j)
+            elif(self.board[i][j]=='q'):
+                return self.wqueen(i,j)
+            elif(self.board[i][j]=='r'):
+                return self.wrook(i,j)
+            elif(self.board[i][j]=='n'):
+                return self.wknight(i,j)
+            elif(self.board[i][j]=='b'):
+                return self.wbishop(i,j)
+            elif(self.board[i][j]=='k'):
+                return self.wking(i,j)
+        else:
+            if(self.board[i][j]=='p'):
+                return self.bpawn(i,j)
+            elif(self.board[i][j]=='q'):
+                return self.bqueen(i,j)
+            elif(self.board[i][j]=='r'):
+                return self.brook(i,j)
+            elif(self.board[i][j]=='n'):
+                return self.bknight(i,j)
+            elif(self.board[i][j]=='b'):
+                return self.bbishop(i,j)
+            elif(self.board[i][j]=='k'):
+                return self.bking(i,j)
+            
+
+    def cal(self,k):
+        i=k//10
+        j=k%10
+        return [i,j]
+
+    def move(self,frm,to,turn):
+
+        
+        [i,j]=self.cal(frm)
+        [x,y]=self.cal(to)
+
+        pmoves=self.possiblemoves(i,j,turn)
+
+        if(to not in pmoves):
+            print("Not a valid move , try again")
+            return False
+
+
+        self.board[x][y]=self.board[i][j]
+        self.board[i][j]='_'
+        return True
+
+    def run(self):
+        while(self.running):
+            if(self.turn=='w'):
+                x=self.whitemove()
+                if(x):
+                    self.turn='w'
+            else:
+                x=self.blackmove()
+                if(x):
+                    self.turn='w'
+
+    def takemove(self,turn):
+        print(turn," move move 00 to 45 : ")
+        begin=int(input())
+        end=int(input())
+        return [begin,end]
+    
+    
+    def whitemove(self):
+        [i,j]=self.takemove("white")
+        x=self.move(i,j,'w')
+        if(not x):
+            return False
+        self.showboard()
+        return True
+        
+
+    def blackmove(self):
+        [i,j]=self.takemove("Black")
+        x=self.move(i,j,'b')
+        if(not x):
+            return False 
+        self.showboard()
+        return True
+
+
+
+    symb = {
+        'K': '♔',  'Q': '♕',  'R': '♖',  'B': '♗',  'N': '♘',  'P': '♙',  # white
+        'k': '♚',  'q': '♛',  'r': '♜',  'b': '♝',  'n': '♞',  'p': '♟',  # black
+        '.': '·',  ' ': '·',   None: '·'                                        # empty
+    }
+    def showboard(self):
+        # Header
+        print("\n    0  1  2  3  4  5  6  7")
+        print("  ──────────────────────────")
+        
+        for rank in range(0,8):
+            row = self.board[rank]
+            print(f"{rank} │", end=" ")
+            for square in row:
+                glyph = self.symb.get(square, '_')
+                print(glyph, end="  ")
+            print(f"│ {8 - rank}")
+        
+        # Footer
+        print("  ──────────────────────────")
+        print("    a  b  c  d  e  f  g  h\n")
+
+
+
+b1=chess()
+print("Hello")
+b1.showboard()
+b1.run()
+
