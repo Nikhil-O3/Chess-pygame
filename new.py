@@ -19,6 +19,12 @@ class chess:
         self.bpieces=['R','N','B','Q','K','P']
         
 
+#---returns i and j for ij :
+    def cal(self,k):
+        i=k//10
+        j=k%10
+        return [i,j]
+
 
     def isblack(self,i,j):
         return(self.board[i][j] in self.bpieces) 
@@ -32,6 +38,9 @@ class chess:
     def v(self,i,j):
         return i<8 and i>-1 and j<8 and j>-1
 
+
+
+#--------function for each piece :
     #promotion not defined
     def wpawn(self,i,j):
         ret=[]
@@ -121,8 +130,15 @@ class chess:
 
         return ret
 
+#--------------ends here
+
 
     def possiblemoves(self,i,j,turn):
+        
+        if(self.board[i][j]=='_'):
+                return []
+        
+
         if(turn=='w'):
             if(self.board[i][j]=='p'):
                 return self.wpawn(i,j)
@@ -151,21 +167,16 @@ class chess:
                 return self.bking(i,j)
             
 
-    def cal(self,k):
-        i=k//10
-        j=k%10
-        return [i,j]
-
     def move(self,frm,to,turn):
 
         
         [i,j]=self.cal(frm)
         [x,y]=self.cal(to)
 
-        pmoves=self.possiblemoves(i,j,turn)
-        print(pmoves)
+        pmoves=self.possiblemoves(i,j,turn) or []
+        
+        if(pmoves or to not in pmoves):
 
-        if(to not in pmoves):
             print("Not a valid move , try again")
             return False
 
@@ -174,51 +185,66 @@ class chess:
         self.board[i][j]='_'
         return True
 
-    def run(self):
-        while(self.running):
-            if(self.turn=='w'):
-                x=self.whitemove()
-                if(x):
-                    self.turn='w'
-            else:
-                x=self.blackmove()
-                if(x):
-                    self.turn='w'
+
+
 
     def takemove(self,turn):
         print(turn," move move 00 to 45 : ")
         begin=int(input())
+
         [i,j]=self.cal(begin)
-        pm=self.possiblemoves(i,j,'w')
-        print(pm)
-        end=int(input())
-        return [begin,end]
-    
-    
-    def whitemove(self):
-        [i,j]=self.takemove("white")
-        x=self.move(i,j,'w')
-        if(not x):
-            return False
-        self.showboard()
-        return True
         
+        if(self.v(i,j)):
 
-    def blackmove(self):
-        [i,j]=self.takemove("Black")
-        x=self.move(i,j,'b')
-        if(not x):
-            return False 
-        self.showboard()
-        return True
+            pm=self.possiblemoves(i,j,'w')
+            if(len(pm)==0):
+                return [-2,-2]
 
+            print(self.symb[self.board[i][j]],pm)
+
+            end=int(input())
+        else:
+            return [-1,-1]
+
+        return [begin,end]
+ 
+    def run(self):
+        while(self.running):
+            if(self.turn=='w'):
+                
+                [i,j]=self.takemove("white")
+                
+                if(i==-2):
+                    print("no postion to move")
+
+                elif(i==-1):
+                    print("wrong input , try again : ")
+                else:
+
+
+                    x=self.move(i,j,'w')
+                    self.showboard()
+                    if(x):
+                        self.turn='w'
+
+            else:
+                [i,j]=self.takemove("Black")
+
+                x=self.move(i,j,'b')
+
+                self.showboard()
+
+                if(x):
+                    self.turn='w'
 
 
     symb = {
         'K': '♔',  'Q': '♕',  'R': '♖',  'B': '♗',  'N': '♘',  'P': '♙',  # white
         'k': '♚',  'q': '♛',  'r': '♜',  'b': '♝',  'n': '♞',  'p': '♟',  # black
-        '.': '·',  ' ': '·',   None: '·'                                        # empty
+        '_': '_',  ' ': '·',   None: 'none'                                        # empty
     }
+
+
     def showboard(self):
         # Header
         print("\n    0  1  2  3  4  5  6  7")
