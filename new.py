@@ -44,7 +44,6 @@ class chess:
             ret.append(self.tonum(i-1,j+1))
         if(i==6):
             ret.append(self.tonum(i-2,j))
-        print(ret)
         return ret
         
     def wknight(self,i,j):
@@ -75,7 +74,6 @@ class chess:
         if(self.v(i+2,j+1) and self.board[i+2][j+1] not in self.wpieces):
             ret.append(self.tonum(i+2,j+1))
 
-        print(ret)
         return ret
 
     def wrook(self,i,j):                                
@@ -190,6 +188,9 @@ class chess:
     def takemove(self,turn):
         print(turn," move move 00 to 45 : ")
         begin=int(input())
+        [i,j]=self.cal(begin)
+        pm=self.possiblemoves(i,j,'w')
+        print(pm)
         end=int(input())
         return [begin,end]
     
