@@ -175,7 +175,7 @@ class chess:
 
         pmoves=self.possiblemoves(i,j,turn) or []
         
-        if(pmoves or to not in pmoves):
+        if( to not in pmoves):
 
             print("Not a valid move , try again")
             return False
@@ -229,13 +229,19 @@ class chess:
 
             else:
                 [i,j]=self.takemove("Black")
+                
+                if(i==-2):
+                    print("no postion to move")
 
-                x=self.move(i,j,'b')
+                elif(i==-1):
+                    print("wrong input , try again : ")
+                else:
 
-                self.showboard()
 
-                if(x):
-                    self.turn='w'
+                    x=self.move(i,j,'w')
+                    self.showboard()
+                    if(x):
+                        self.turn='w'
 
 
     symb = {
