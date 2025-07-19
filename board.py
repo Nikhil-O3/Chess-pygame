@@ -95,10 +95,6 @@ class show:
             pygame.display.flip()
 
          
-            
-
-
-
 
 s1 = show() 
 
