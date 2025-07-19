@@ -152,7 +152,7 @@ class chess:
 
     def possiblemoves(self,i,j,turn):
         
-        if(self.board[i][j]=='_'):
+        if(self.board[i][j]==' '):
                 return []
         
 
@@ -200,6 +200,9 @@ class chess:
 
         self.board[x][y]=self.board[i][j]
         self.board[i][j]='_'
+        self.showgrid()
+        self.plotp()
+        pygame.display.flip()
         return True
 
 
@@ -228,7 +231,6 @@ class chess:
     def run(self):
 
         tofrom=[]
-        i=-1
         self.showgrid()
         self.plotp()
         pygame.display.flip()
@@ -245,24 +247,38 @@ class chess:
                     if event.button == 1:  # Left click
 
                         tofrom.append(event.pos)
-                        i=i+1
-                        
-                        print(tofrom[i][1]//100*10 + tofrom[i][0]//100)
 
-                        fx=tofrom[i][1]//100
-                        fy=tofrom[i][0]//100
+                        frm=tofrom[0][1]//100*10 + tofrom[0][0]//100
+                        
+                        print(tofrom[0][1]//100*10 + tofrom[0][0]//100)
+
+                        fx=tofrom[0][1]//100
+                        fy=tofrom[0][0]//100
+
+                        pm=self.possiblemoves(fx,fy,'w')
+
+                        print(pm)
 
                         self.showgrid()
                         self.plotp()
                         pygame.display.flip()
 
 
-                        if(len(tofrom)>=2):
+                        if(len(tofrom)>=2 and len(pm)>0):
+
                             tx=tofrom[1][1]//100
                             ty=tofrom[1][0]//100
+
+                            tofrom=[]
+
+                            to=tx*10 + ty
+                            
+
                             if(self.turn=='w'):
                                                                     
-                                pass
+                                    self.move(frm,to,'w')
+                                    self.showboard()
+
                                 
                                 
 
