@@ -76,7 +76,7 @@ class show:
                 
 
 
-    def run(self):
+    def runb(self):
         while self.running:
         
             # Event handling
@@ -89,7 +89,6 @@ class show:
                     self.ft.append(event.pos)
                 
                 
-            self.screen.fill((30, 30, 30))
             s1.showgrid()
             self.plotp()
             pygame.display.flip()
@@ -99,7 +98,7 @@ class show:
 s1 = show() 
 
 
-s1.run()
+s1.runb()
 
 pygame.quit()
 

@@ -17,7 +17,24 @@ class chess:
         
         self.wpieces=['q','k','b','n','r','p']
         self.bpieces=['R','N','B','Q','K','P']
-        
+
+        #---pygame init :
+
+        self.col=True
+        pygame.init()
+
+        WIDTH, HEIGHT = 800, 800
+
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("Chess")
+
+
+        # ---
+        self.font = pygame.font.SysFont(None, 48)
+        self.white = (255, 255, 255)
+        self.black = (0, 0, 0)
+        self.color1 = (0, 0, 0)
+
 
 #---returns i and j for ij :
     def cal(self,k):
@@ -209,45 +226,69 @@ class chess:
         return [begin,end]
  
     def run(self):
+
+        tofrom=[]
+        i=-1
+        self.showgrid()
+        self.plotp()
+        pygame.display.flip()
         while(self.running):
-            if(self.turn=='w'):
-                
-                [i,j]=self.takemove("white")
-                
-                if(i==-2):
-                    print("no postion to move")
+            
+            
+            for event in pygame.event.get():
+            # Handle quit
+                if event.type == pygame.QUIT:
+                    self.running = False
 
-                elif(i==-1):
-                    print("wrong input , try again : ")
-                else:
+                # Detect mouse tap (mouse button down event)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:  # Left click
 
+                        tofrom.append(event.pos)
+                        i=i+1
+                        
+                        print(tofrom[i][1]//100*10 + tofrom[i][0]//100)
 
-                    x=self.move(i,j,'w')
-                    self.showboard()
-                    if(x):
-                        self.turn='w'
+                        fx=tofrom[i][1]//100
+                        fy=tofrom[i][0]//100
 
-            else:
-                [i,j]=self.takemove("Black")
-                
-                if(i==-2):
-                    print("no postion to move")
-
-                elif(i==-1):
-                    print("wrong input , try again : ")
-                else:
+                        self.showgrid()
+                        self.plotp()
+                        pygame.display.flip()
 
 
-                    x=self.move(i,j,'w')
-                    self.showboard()
-                    if(x):
-                        self.turn='w'
+                        if(len(tofrom)>=2):
+                            tx=tofrom[1][1]//100
+                            ty=tofrom[1][0]//100
+                            if(self.turn=='w'):
+                                                                    
+                                pass
+                                
+                                
+
+                            else:
+                                [i,j]=self.takemove("Black")
+                                
+                                if(i==-2):
+                                    print("no postion to move")
+
+                                elif(i==-1):
+                                    print("wrong input , try again : ")
+                                else:
+
+
+                                    x=self.move(i,j,'w')
+                                    self.showboard()
+                                    if(x):
+                                        self.turn='w'
+
+        pygame.quit()
 
 
     symb = {
         'K': '♔',  'Q': '♕',  'R': '♖',  'B': '♗',  'N': '♘',  'P': '♙',  # white
         'k': '♚',  'q': '♛',  'r': '♜',  'b': '♝',  'n': '♞',  'p': '♟',  # black
-        '_': '_',  ' ': '·',   None: 'none'                                        # empty
+        '_': ' ',  ' ': '·',   None: 'none'                                        # empty
     }
 
 
@@ -270,8 +311,43 @@ class chess:
 
 
 
+    def color(self):
+        if(self.col):
+            self.col=False
+            return [0,100,0]
+        else:
+            self.col=True
+            return [255,255,255]
+
+    def showgrid(self):
+        
+
+
+        for i in range(0,800,100):
+            self.col= not self.col
+            for j in range(0,800,100):
+
+                pygame.draw.rect(self.screen, self.color(), (i, j, 100, 100,))
+
+    def plotp(self):
+            
+
+        for i in range(0,800,100):
+            for j in range(0,800,100):
+
+                x=int(i/100)
+                y=int(j/100)
+                if self.board[x][y]  == '_':
+                    txt=' '
+                else:
+                    txt=self.board[x][y] 
+                text_surface = self.font.render(txt , True, self.color1)
+                self.screen.blit(text_surface, (j+30, i+30))
+                
+
 b1=chess()
 print("Hello")
+b1.showgrid()
 b1.showboard()
 b1.run()
 
