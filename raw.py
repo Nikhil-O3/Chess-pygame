@@ -58,6 +58,9 @@ class chess:
 
 
 #--------function for each piece :
+
+
+# White-----------------
     #promotion not defined
     def wpawn(self,i,j):
         ret=[]
@@ -147,13 +150,447 @@ class chess:
 
         return ret
 
-#--------------ends here
+    def wqueen(self,i,j):
+        ret=[]
+        x=i
+        y=j
+
+        # u-d--r-l
+
+        while( self.v(x+1,y) and self.board[x+1][y] not in self.wpieces):
+            if(self.board[x+1][y]!='_'):
+                ret.append(self.tonum(x+1,y))
+                break
+            ret.append(self.tonum(x+1,y))
+            x=x+1
+        
+        x=i
+        y=j
+
+        while( self.v(x-1,y) and self.board[x-1][y] not in self.wpieces):
+            if(self.board[x-1][y]!='_'):
+                ret.append(self.tonum(x-1,y))
+                break
+            ret.append(self.tonum(x-1,y))
+            x=x-1
+        
+        x=i
+        y=j
+
+        while( self.v(x,y-1) and self.board[x][y-1] not in self.wpieces):
+            if(self.board[x][y-1]!='_'):
+                ret.append(self.tonum(x,y-1))
+                break
+            ret.append(self.tonum(x,y-1))
+            y=y-1
+
+
+        x=i
+        y=j
+
+        while( self.v(x,y+1) and self.board[x][y+1] not in self.wpieces):
+            if(self.board[x][y+1]!='_'):
+                ret.append(self.tonum(x,y+1))
+                break
+            ret.append(self.tonum(x,y+1))
+            y=y+1
+
+        # diagonal ----------
+        x=i
+        y=j
+
+        while(self.v(x+1,y+1) and self.board[x+1][y+1] not in self.wpieces):
+            if(self.board[x+1][y+1]!='_'):
+                ret.append(self.tonum(x+1,y+1))
+                break
+            ret.append(self.tonum(x+1,y+1))
+            x=x+1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y+1) and self.board[x-1][y+1] not in self.wpieces):
+            if(self.board[x-1][y+1]!='_'):
+                ret.append(self.tonum(x-1,y+1))
+                break
+            ret.append(self.tonum(x-1,y+1))
+            x=x-1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x+1,y-1) and self.board[x+1][y-1] not in self.wpieces):
+            if(self.board[x+1][y-1]!='_'):
+                ret.append(self.tonum(x+1,y-1))
+                break
+            ret.append(self.tonum(x+1,y-1))
+            x=x+1
+            y=y-1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y-1) and self.board[x-1][y-1] not in self.wpieces):
+            if(self.board[x-1][y-1]!='_'):
+                ret.append(self.tonum(x-1,y-1))
+                break
+            ret.append(self.tonum(x-1,y-1))
+            x=x-1
+            y=y-1
+        
+        
+        
+        
+
+        return ret
+
+    # defeneded piece logic remains
+    #could get check remains
+
+    def wking(self,i,j):
+        ret=[]
+        
+        for [x,y] in [[i,j+1], [i,j-1], [i+1,j], [i-1,j], [i+1,j+1], [i-1,j-1], [i+1,j-1], [i-1,j+1]]:
+            if(self.v(x,y) and self.board[x][y] not in self.wpieces):
+                if(self.board[x][y] in self.bpieces):
+                    pass
+                    # if -> bisdefended(self.board[x][y])
+                    # break
+                # elif(self.blackthreat(x,y)):
+                    # break
+
+                ret.append(self.tonum(x,y))
+        
+        return ret
+           
+
+
+    def wbishop(self,i,j):
+
+
+                # diagonal ----------
+        ret=[]
+        x=i
+        y=j
+
+        while(self.v(x+1,y+1) and self.board[x+1][y+1] not in self.wpieces):
+            if(self.board[x+1][y+1]!='_'):
+                ret.append(self.tonum(x+1,y+1))
+                break
+            ret.append(self.tonum(x+1,y+1))
+            x=x+1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y+1) and self.board[x-1][y+1] not in self.wpieces):
+            if(self.board[x-1][y+1]!='_'):
+                ret.append(self.tonum(x-1,y+1))
+                break
+            ret.append(self.tonum(x-1,y+1))
+            x=x-1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x+1,y-1) and self.board[x+1][y-1] not in self.wpieces):
+            if(self.board[x+1][y-1]!='_'):
+                ret.append(self.tonum(x+1,y-1))
+                break
+            ret.append(self.tonum(x+1,y-1))
+            x=x+1
+            y=y-1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y-1) and self.board[x-1][y-1] not in self.wpieces):
+            if(self.board[x-1][y-1]!='_'):
+                ret.append(self.tonum(x-1,y-1))
+                break
+            ret.append(self.tonum(x-1,y-1))
+            x=x-1
+            y=y-1
+        
+        
+        
+        
+
+        return ret
+
+
+# black --------------------
+
+    def bknight(self,i,j):
+        ret=[]
+        if(self.v(i-1,j-2) and self.board[i-1][j-2] not in self.bpieces):
+            ret.append(self.tonum(i-1,j-2))
+
+        if(self.v(i-1,j+2) and self.board[i-1][j+2] not in self.bpieces):
+            ret.append(self.tonum(i-1,j+2))
+
+        if(self.v(i-2,j-1) and self.board[i-2][j-1] not in self.bpieces):
+            ret.append(self.tonum(i-2,j-1))
+
+        if(self.v(i-2,j+1) and self.board[i-2][j+1] not in self.bpieces):
+            ret.append(self.tonum(i-2,j+1))
+
+        #
+
+        if(self.v(i+1,j-2) and self.board[i+1][j-2] not in self.bpieces):
+            ret.append(self.tonum(i+1,j-2))
+
+        if(self.v(i+1,j+2) and self.board[i+1][j+2] not in self.bpieces):
+            ret.append(self.tonum(i+1,j+2))
+
+        if(self.v(i+2,j-1) and self.board[i+2][j-1] not in self.bpieces):
+            ret.append(self.tonum(i+2,j-1))
+
+        if(self.v(i+2,j+1) and self.board[i+2][j+1] not in self.bpieces):
+            ret.append(self.tonum(i+2,j+1))
+
+        return ret
+
+    def bpawn(self,i,j):
+        ret=[]
+
+        if(self.v(i+1,j) and self.board[i+1][j]=='_'):
+            ret.append(self.tonum(i+1,j))
+
+        if(self.v(i+1,j-1) and self.iswhite(i+1,j-1)):
+            ret.append(self.tonum(i+1,j-1))
+
+        if(self.v(i+1,j+1) and self.iswhite(i+1,j+1)):
+            ret.append(self.tonum(i+1,j+1))
+
+        if(i==1):
+            ret.append(self.tonum(i+2,j))
+
+        return ret
+  
+    def bbishop(self,i,j):
+
+
+                # diagonal ----------
+        ret=[]
+        x=i
+        y=j
+
+        while(self.v(x+1,y+1) and self.board[x+1][y+1] not in self.bpieces):
+            if(self.board[x+1][y+1]!='_'):
+                ret.append(self.tonum(x+1,y+1))
+                break
+            ret.append(self.tonum(x+1,y+1))
+            x=x+1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y+1) and self.board[x-1][y+1] not in self.bpieces):
+            if(self.board[x-1][y+1]!='_'):
+                ret.append(self.tonum(x-1,y+1))
+                break
+            ret.append(self.tonum(x-1,y+1))
+            x=x-1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x+1,y-1) and self.board[x+1][y-1] not in self.bpieces):
+            if(self.board[x+1][y-1]!='_'):
+                ret.append(self.tonum(x+1,y-1))
+                break
+            ret.append(self.tonum(x+1,y-1))
+            x=x+1
+            y=y-1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y-1) and self.board[x-1][y-1] not in self.bpieces):
+            if(self.board[x-1][y-1]!='_'):
+                ret.append(self.tonum(x-1,y-1))
+                break
+            ret.append(self.tonum(x-1,y-1))
+            x=x-1
+            y=y-1
+        
+        
+        
+        
+
+        return ret
+
+    def bqueen(self,i,j):
+        ret=[]
+        x=i
+        y=j
+
+        # u-d--r-l
+
+        while( self.v(x+1,y) and self.board[x+1][y] not in self.bpieces):
+            if(self.board[x+1][y]!='_'):
+                ret.append(self.tonum(x+1,y))
+                break
+            ret.append(self.tonum(x+1,y))
+            x=x+1
+        
+        x=i
+        y=j
+
+        while( self.v(x-1,y) and self.board[x-1][y] not in self.bpieces):
+            if(self.board[x-1][y]!='_'):
+                ret.append(self.tonum(x-1,y))
+                break
+            ret.append(self.tonum(x-1,y))
+            x=x-1
+        
+        x=i
+        y=j
+
+        while( self.v(x,y-1) and self.board[x][y-1] not in self.bpieces):
+            if(self.board[x][y-1]!='_'):
+                ret.append(self.tonum(x,y-1))
+                break
+            ret.append(self.tonum(x,y-1))
+            y=y-1
+
+
+        x=i
+        y=j
+
+        while( self.v(x,y+1) and self.board[x][y+1] not in self.bpieces):
+            if(self.board[x][y+1]!='_'):
+                ret.append(self.tonum(x,y+1))
+                break
+            ret.append(self.tonum(x,y+1))
+            y=y+1
+
+        # diagonal ----------
+        x=i
+        y=j
+
+        while(self.v(x+1,y+1) and self.board[x+1][y+1] not in self.bpieces):
+            if(self.board[x+1][y+1]!='_'):
+                ret.append(self.tonum(x+1,y+1))
+                break
+            ret.append(self.tonum(x+1,y+1))
+            x=x+1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y+1) and self.board[x-1][y+1] not in self.bpieces):
+            if(self.board[x-1][y+1]!='_'):
+                ret.append(self.tonum(x-1,y+1))
+                break
+            ret.append(self.tonum(x-1,y+1))
+            x=x-1
+            y=y+1
+        
+        x=i
+        y=j
+
+        while(self.v(x+1,y-1) and self.board[x+1][y-1] not in self.bpieces):
+            if(self.board[x+1][y-1]!='_'):
+                ret.append(self.tonum(x+1,y-1))
+                break
+            ret.append(self.tonum(x+1,y-1))
+            x=x+1
+            y=y-1
+        
+        x=i
+        y=j
+
+        while(self.v(x-1,y-1) and self.board[x-1][y-1] not in self.bpieces):
+            if(self.board[x-1][y-1]!='_'):
+                ret.append(self.tonum(x-1,y-1))
+                break
+            ret.append(self.tonum(x-1,y-1))
+            x=x-1
+            y=y-1
+        
+        
+        
+        
+
+        return ret
+
+    def bking(self,i,j):
+        ret=[]
+        
+        for [x,y] in [[i,j+1], [i,j-1], [i+1,j], [i-1,j], [i+1,j+1], [i-1,j-1], [i+1,j-1], [i-1,j+1]]:
+            if(self.v(x,y) and self.board[x][y] not in self.bpieces):
+                if(self.board[x][y] in self.wpieces):
+                    pass
+                    # if -> bisdefended(self.board[x][y])
+                    # break
+                # elif(self.blackthreat(x,y)):
+                    # break
+
+                ret.append(self.tonum(x,y))
+        
+        return ret
+ 
+    def brook(self,i,j):                                
+        ret=[]
+        x=i
+        y=j
+        while( self.v(x+1,y) and self.board[x+1][y] not in self.bpieces):
+            if(self.board[x+1][y]!='_'):
+                ret.append(self.tonum(x+1,y))
+                break
+            ret.append(self.tonum(x+1,y))
+            x=x+1
+        
+        x=i
+        y=j
+
+        while( self.v(x-1,y) and self.board[x-1][y] not in self.bpieces):
+            if(self.board[x-1][y]!='_'):
+                ret.append(self.tonum(x-1,y))
+                break
+            ret.append(self.tonum(x-1,y))
+            x=x-1
+        
+        x=i
+        y=j
+
+        while( self.v(x,y-1) and self.board[x][y-1] not in self.bpieces):
+            if(self.board[x][y-1]!='_'):
+                ret.append(self.tonum(x,y-1))
+                break
+            ret.append(self.tonum(x,y-1))
+            y=y-1
+
+
+        x=i
+        y=j
+
+        while( self.v(x,y+1) and self.board[x][y+1] not in self.bpieces):
+            if(self.board[x][y+1]!='_'):
+                ret.append(self.tonum(x,y+1))
+                break
+            ret.append(self.tonum(x,y+1))
+            y=y+1
+
+
+        return ret
+
+#--------------ends
 
 
     def possiblemoves(self,i,j,turn):
         
         if(self.board[i][j]==' '):
-                return []
+                return None
         
 
         if(turn=='w'):
@@ -170,18 +607,19 @@ class chess:
             elif(self.board[i][j]=='k'):
                 return self.wking(i,j)
         else:
-            if(self.board[i][j]=='p'):
+            if(self.board[i][j]=='P'):
                 return self.bpawn(i,j)
-            elif(self.board[i][j]=='q'):
+            elif(self.board[i][j]=='Q'):
                 return self.bqueen(i,j)
-            elif(self.board[i][j]=='r'):
+            elif(self.board[i][j]=='R'):
                 return self.brook(i,j)
-            elif(self.board[i][j]=='n'):
+            elif(self.board[i][j]=='N'):
                 return self.bknight(i,j)
-            elif(self.board[i][j]=='b'):
+            elif(self.board[i][j]=='B'):
                 return self.bbishop(i,j)
-            elif(self.board[i][j]=='k'):
+            elif(self.board[i][j]=='K'):
                 return self.bking(i,j)
+        return []
             
 
     def move(self,frm,to,turn):
@@ -206,36 +644,28 @@ class chess:
         return True
 
 
+    def display(self,poss=[]):
+        self.showgrid(poss)
+        self.plotp()
+        pygame.display.flip()
 
 
-    def takemove(self,turn):
-        print(turn," move move 00 to 45 : ")
-        begin=int(input())
 
-        [i,j]=self.cal(begin)
-        
-        if(self.v(i,j)):
-
-            pm=self.possiblemoves(i,j,'w')
-            if(len(pm)==0):
-                return [-2,-2]
-
-            print(self.symb[self.board[i][j]],pm)
-
-            end=int(input())
-        else:
-            return [-1,-1]
-
-        return [begin,end]
- 
     def run(self):
 
         tofrom=[]
-        self.showgrid()
-        self.plotp()
-        pygame.display.flip()
+        frm=0
+        to=0
+        pm=[]
+        fx=0
+        fy=0
+        tx=0
+        ty=0
+
+        self.display()
+
         while(self.running):
-            
+        
             
             for event in pygame.event.get():
             # Handle quit
@@ -248,52 +678,47 @@ class chess:
 
                         tofrom.append(event.pos)
 
-                        frm=tofrom[0][1]//100*10 + tofrom[0][0]//100
-                        
-                        print(tofrom[0][1]//100*10 + tofrom[0][0]//100)
+                        self.display()
 
-                        fx=tofrom[0][1]//100
-                        fy=tofrom[0][0]//100
+                        if(len(tofrom)==1):
+                            fx=tofrom[0][1]//100
+                            fy=tofrom[0][0]//100
 
-                        pm=self.possiblemoves(fx,fy,'w')
+                            pm=self.possiblemoves(fx,fy,self.turn)
+                            print("possible moves : ",pm)
+                            
+                                
+                            self.display(pm)
 
-                        print(pm)
-
-                        self.showgrid()
-                        self.plotp()
-                        pygame.display.flip()
+                            if(pm==None or pm==[]):
+                                tofrom=[]
 
 
-                        if(len(tofrom)>=2 and len(pm)>0):
+                        if(len(tofrom)==2 ):
 
                             tx=tofrom[1][1]//100
                             ty=tofrom[1][0]//100
 
                             tofrom=[]
 
+                            frm=fx*10 + fy
                             to=tx*10 + ty
                             
 
                             if(self.turn=='w'):
                                                                     
-                                    self.move(frm,to,'w')
-                                    self.showboard()
+                                    x=self.move(frm,to,'w')
 
+                                    self.display()
+                                    self.showboard()
+                                    if(x):
+                                        self.turn='b'
                                 
                                 
 
                             else:
-                                [i,j]=self.takemove("Black")
-                                
-                                if(i==-2):
-                                    print("no postion to move")
-
-                                elif(i==-1):
-                                    print("wrong input , try again : ")
-                                else:
-
-
-                                    x=self.move(i,j,'w')
+                                    x=self.move(frm,to,'b')
+                                    self.display()
                                     self.showboard()
                                     if(x):
                                         self.turn='w'
@@ -335,7 +760,7 @@ class chess:
             self.col=True
             return [255,255,255]
 
-    def showgrid(self):
+    def showgrid(self,poss=[]):
         
 
 
@@ -344,6 +769,11 @@ class chess:
             for j in range(0,800,100):
 
                 pygame.draw.rect(self.screen, self.color(), (i, j, 100, 100,))
+            
+        for x in poss:
+            [j,i]=self.cal(x)
+            # pygame.draw.rect(self.screen, (100,0,0), (i*100+5,j*100+5, 90, 90,))
+            pygame.draw.circle(self.screen,(50,50,50),(i*100+50,j*100+50),20,2)
 
     def plotp(self):
             
@@ -359,10 +789,13 @@ class chess:
                     txt=self.board[x][y] 
                 text_surface = self.font.render(txt , True, self.color1)
                 self.screen.blit(text_surface, (j+30, i+30))
+
+        
+
                 
 
 b1=chess()
-print("Hello")
+print("the game begins.")
 b1.showgrid()
 b1.showboard()
 b1.run()
