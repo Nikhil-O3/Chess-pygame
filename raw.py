@@ -644,8 +644,9 @@ class chess:
         return True
 
 
-    def display(self,poss=[]):
-        self.showgrid(poss)
+    def display(self,poss=[],frm=-1):
+
+        self.showgrid(poss,frm)
         self.plotp()
         pygame.display.flip()
 
@@ -684,11 +685,13 @@ class chess:
                             fx=tofrom[0][1]//100
                             fy=tofrom[0][0]//100
 
+                            frm=fx*10+fy
+
                             pm=self.possiblemoves(fx,fy,self.turn)
                             print("possible moves : ",pm)
                             
                                 
-                            self.display(pm)
+                            self.display(pm,frm)
 
                             if(pm==None or pm==[]):
                                 tofrom=[]
@@ -755,12 +758,12 @@ class chess:
     def color(self):
         if(self.col):
             self.col=False
-            return [0,100,0]
+            return [0,150,0]
         else:
             self.col=True
             return [255,255,255]
 
-    def showgrid(self,poss=[]):
+    def showgrid(self,poss=[],selected=-1):
         
 
 
@@ -774,6 +777,10 @@ class chess:
             [j,i]=self.cal(x)
             # pygame.draw.rect(self.screen, (100,0,0), (i*100+5,j*100+5, 90, 90,))
             pygame.draw.circle(self.screen,(50,50,50),(i*100+50,j*100+50),20,2)
+
+        if(selected != -1):
+            [j,i]=self.cal(selected)
+            pygame.draw.rect(self.screen, (100,100,100), (i*100, j*100, 100, 100,))
 
     def plotp(self):
             
